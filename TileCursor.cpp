@@ -2,15 +2,7 @@
 
 bool TileCursor::isTrackValid() const
 {
-	if (mTerrain->GetObjects()->GetStart().position.x != 0 || mTerrain->GetObjects()->GetStart().position.y != 0) 
-	{
-		if (mTerrain->GetObjects()->GetCheckpoint().position.x != 0 || mTerrain->GetObjects()->GetCheckpoint().position.y != 0)
-		{
-			return true;
-		}
-	}
-
-	return false;
+	return true;
 }
 
 TileCursor::TileCursor() :
@@ -76,6 +68,7 @@ void TileCursor::Update()
 	switch (mType)
 	{
 	case SetTiles:
+
 		if (IsKeyPressed(KEY_E))
 		{
 			int index = mTerrain->GetTilemap()->GetTile(mRowIndex, mColIndex)->GetLayer1Index();
@@ -130,7 +123,34 @@ void TileCursor::Update()
 				mTerrain->GetObjects()->RemoveTurretBase(index);
 			}
 		}
+		break;
 
+	case SetEnemyPath:
+
+		if (IsKeyPressed(KEY_E)) {
+			bool isSamePos = false;
+			int index = 0;
+			vector<Vector2> waypoints = mTerrain->GetObjects()->GetEnemyPath();
+			for (int i = 0; i < waypoints.size(); i++)
+			{
+				Vector2 waypoint = waypoints[i];
+
+				if (waypoint.x == mSize.x * (0.5f + mColIndex) && waypoint.y == mSize.y * (0.5f + mRowIndex))
+				{
+					isSamePos = true;
+					index = i;
+				}
+			}
+
+			if (!isSamePos)
+			{
+				mTerrain->GetObjects()->AddEnemyWaypoint({ mSize.x * (0.5f + mColIndex), mSize.y * (0.5f + mRowIndex) });
+			}
+			else
+			{
+				mTerrain->GetObjects()->RemoveEnemyWaypoint(index);
+			}
+		}
 		break;
 
 	}
@@ -145,6 +165,11 @@ void TileCursor::Update()
 			break;
 
 		case SetTurretBases:
+			mType = SetEnemyPath;
+			mRotation = 0;
+			break;
+
+		case SetEnemyPath:
 			mType = SetTiles;
 			mRotation = 0;
 			break;
@@ -169,6 +194,9 @@ void TileCursor::Draw() const
 
 	case SetTurretBases:
 		text = AssetBank::GetInstance()->GetTurretBaseTexture();
+
+	case SetEnemyPath:
+		mTerrain->GetObjects()->DrawEnemyPath();
 
 		break;
 	}

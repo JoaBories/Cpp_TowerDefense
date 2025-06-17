@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include "Track.h"
 #include "TileCursor.h"
 
 enum GameState
@@ -15,13 +14,13 @@ class Engine
 {
 private :
 	TileCursor* mTileCursor;
-	Terrain* mTrack;
+	Terrain* mTerrain;
 
 	GameState mGameState;
 
 	Color mOrange;
 
-	void StartRace();
+	void StartGame();
 
 public :
 	Engine();

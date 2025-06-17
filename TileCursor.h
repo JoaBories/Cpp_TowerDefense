@@ -1,10 +1,11 @@
 #pragma once
-#include "Track.h"
+#include "Terrain.h"
 
 enum CursorType
 {
 	SetTiles,
-	SetTurretBases
+	SetTurretBases,
+	SetEnemyPath,
 };
 
 

@@ -43,6 +43,8 @@ public:
 	static Vector2 Vector2Scale(Vector2 vector, float scale);
 	static Vector2 Vector2Add(Vector2 a, Vector2 b);
 	static Vector2 Vector2Negate(Vector2 vector);
+	static Vector2 Vector2PerpendicularClockWise(Vector2 vector);
+	static Vector2 Vector2PerpendicularCounterClockWise(Vector2 vector);
 
 	static float Min(float a, float b);
 	static float Max(float a, float b);

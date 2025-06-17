@@ -141,8 +141,8 @@
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileCursor.cpp" />
     <ClCompile Include="Tilemap.cpp" />
-    <ClCompile Include="Track.cpp" />
-    <ClCompile Include="TrackObjects.cpp" />
+    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="Objects.cpp" />
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -152,8 +152,8 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileCursor.h" />
     <ClInclude Include="Tilemap.h" />
-    <ClInclude Include="Track.h" />
-    <ClInclude Include="TrackObjects.h" />
+    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="Objects.h" />
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

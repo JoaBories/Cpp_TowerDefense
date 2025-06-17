@@ -1,4 +1,4 @@
-#include "Track.h"
+#include "Terrain.h"
 #include <fstream>
 
 using std::ifstream;
@@ -7,7 +7,7 @@ using std::ofstream;
 Terrain::Terrain()
 {
 	mTilemap = new Tilemap(14, 20);
-	mObjects = new TrackObjects();
+	mObjects = new Objects();
 }
 
 Terrain::~Terrain()
@@ -25,7 +25,7 @@ Tilemap* Terrain::GetTilemap() const
 	return mTilemap;
 }
 
-TrackObjects* Terrain::GetObjects() const
+Objects* Terrain::GetObjects() const
 {
 	return mObjects;
 }

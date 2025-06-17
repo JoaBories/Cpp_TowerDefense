@@ -1,14 +1,14 @@
 #include "Engine.h"
 
-void Engine::StartRace()
+void Engine::StartGame()
 {
 	mGameState = RaceState;
-	mTrack->LoadTerrain();
+	mTerrain->LoadTerrain();
 }
 
 Engine::Engine() :
 	mTileCursor{ nullptr },
-	mTrack{ nullptr },
+	mTerrain{ nullptr },
 	mGameState{ StartState },
 	mOrange{ 245, 155, 20, 255 }
 {
@@ -17,13 +17,13 @@ Engine::Engine() :
 Engine::~Engine()
 {
 	delete mTileCursor;
-	delete mTrack;
+	delete mTerrain;
 }
 
 void Engine::Init()
 {
-	mTrack = new Terrain();
-	mTileCursor = new TileCursor(mTrack->GetTilemap()->GetTileSize(), mTrack);
+	mTerrain = new Terrain();
+	mTileCursor = new TileCursor(mTerrain->GetTilemap()->GetTileSize(), mTerrain);
 }
 
 void Engine::Update()
@@ -34,12 +34,12 @@ void Engine::Update()
 		if (IsKeyPressed(KEY_E))
 		{
 			mGameState = EditorState;
-			mTrack->LoadTerrain();
+			mTerrain->LoadTerrain();
 		}
 
-		else if (IsKeyPressed(KEY_P) && mTrack->IsThereASave())
+		else if (IsKeyPressed(KEY_P) && mTerrain->IsThereASave())
 		{
-			StartRace();
+			StartGame();
 		}
 		break;
 
@@ -75,14 +75,14 @@ void Engine::Draw()
 	case StartState:
 		Utils::DrawTextCentered("Mini TD", { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 3 }, 20, mOrange);
 		
-		if (mTrack->IsThereASave())
+		if (mTerrain->IsThereASave())
 		{
 			Utils::DrawTextCentered("Play - P", { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2 }, 20, mOrange);
 		}
 		break;
 
 	case EditorState:
-		mTrack->Draw();
+		mTerrain->Draw();
 		mTileCursor->Draw();
 
 		rect = { (float) GetScreenWidth() - 100, (float) GetScreenHeight() - 50, 200, 200};
@@ -102,7 +102,7 @@ void Engine::Draw()
 		break;
 
 	case RaceState:
-		mTrack->Draw();	
+		mTerrain->Draw();	
 		
 		break;
 

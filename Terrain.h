@@ -1,13 +1,13 @@
 #pragma once
 #include "Tilemap.h"
-#include "TrackObjects.h"
+#include "Objects.h"
 
 
 class Terrain
 {
 private :
 	Tilemap* mTilemap;
-	TrackObjects* mObjects;
+	Objects* mObjects;
 
 	string mFileName = "resources/track/01.track";
 
@@ -18,7 +18,7 @@ public :
 	void Draw() const;
 
 	Tilemap* GetTilemap() const;
-	TrackObjects* GetObjects() const;
+	Objects* GetObjects() const;
 
 	bool IsThereASave() const;
 

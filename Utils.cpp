@@ -71,6 +71,16 @@ Vector2 Utils::Vector2Negate(Vector2 vector)
 	return { -vector.x, -vector.y };
 }
 
+Vector2 Utils::Vector2PerpendicularClockWise(Vector2 vector)
+{
+	return { vector.y, -vector.x };
+}
+
+Vector2 Utils::Vector2PerpendicularCounterClockWise(Vector2 vector)
+{
+	return { -vector.y, vector.x };
+}
+
 float Utils::Min(float a, float b)
 {
 	return (a <= b) ? a : b;
