@@ -3,27 +3,27 @@
 #include "TrackObjects.h"
 
 
-class Track
+class Terrain
 {
 private :
 	Tilemap* mTilemap;
-	TrackObjects* mTrackObjects;
+	TrackObjects* mObjects;
 
 	string mFileName = "resources/track/01.track";
 
 public :
-	Track();
-	~Track();
+	Terrain();
+	~Terrain();
 
 	void Draw() const;
 
 	Tilemap* GetTilemap() const;
-	TrackObjects* GetTrackObjects() const;
+	TrackObjects* GetObjects() const;
 
 	bool IsThereASave() const;
 
-	void SaveTrack() const;
-	void LoadTrack();
+	void SaveTerrain() const;
+	void LoadTerrain();
 
 };
 

@@ -4,53 +4,48 @@
 using std::ifstream;
 using std::ofstream;
 
-Track::Track()
+Terrain::Terrain()
 {
 	mTilemap = new Tilemap(14, 20);
-	mTrackObjects = new TrackObjects();
+	mObjects = new TrackObjects();
 }
 
-Track::~Track()
+Terrain::~Terrain()
 {
 }
 
-void Track::Draw() const
+void Terrain::Draw() const
 {
 	mTilemap->Draw();
-	mTrackObjects->DrawObstacles();
+	mObjects->DrawTurretBases();
 }
 
-Tilemap* Track::GetTilemap() const
+Tilemap* Terrain::GetTilemap() const
 {
 	return mTilemap;
 }
 
-TrackObjects* Track::GetTrackObjects() const
+TrackObjects* Terrain::GetObjects() const
 {
-	return mTrackObjects;
+	return mObjects;
 }
 
-bool Track::IsThereASave() const
+bool Terrain::IsThereASave() const
 {
 	ifstream file(mFileName);
 	return file.good();
 }
 
-void Track::SaveTrack() const
+void Terrain::SaveTerrain() const
 {
 	ofstream file(mFileName);
 	if (!file) return;
-
-	Checkpoint checkpoint = mTrackObjects->GetStart();
-	file << "Start " << checkpoint.position.x << " " << checkpoint.position.y << " " << checkpoint.size.x << " " << checkpoint.size.y << " " << checkpoint.direction.x << " " << checkpoint.direction.y << " " << checkpoint.rotation << endl;
-	checkpoint = mTrackObjects->GetCheckpoint();
-	file << "Checkpoint " << checkpoint.position.x << " " << checkpoint.position.y << " " << checkpoint.size.x << " " << checkpoint.size.y << " " << checkpoint.direction.x << " " << checkpoint.direction.y << " " << checkpoint.rotation << endl;
 	
-	vector<Obstacles> obstacles = mTrackObjects->GetObstacles();
-	file << "Obstacles " << obstacles.size() << endl;
-	for (size_t i = 0; i < obstacles.size(); i++)
+	vector<TurretBase> turretBases = mObjects->GetTurretBases();
+	file << "TurretBases " << turretBases.size() << endl;
+	for (size_t i = 0; i < turretBases.size(); i++)
 	{
-		file << i << "- " << obstacles[i].GetPosition().x << " " << obstacles[i].GetPosition().y << " " << obstacles[i].GetSize().x << " " << obstacles[i].GetSize().y << " " << obstacles[i].GetRotation() << endl;
+		file << i << "- " << turretBases[i].GetPosition().x << " " << turretBases[i].GetPosition().y << " " << turretBases[i].GetSize().x << " " << turretBases[i].GetSize().y << endl;
 	}
 
 	file << "Tilemap " << mTilemap->GetRows() << " " << mTilemap->GetCols() << endl;
@@ -68,7 +63,7 @@ void Track::SaveTrack() const
 	file.close();
 }
 
-void Track::LoadTrack()
+void Terrain::LoadTerrain()
 {
 
 	if (IsThereASave())
@@ -80,22 +75,14 @@ void Track::LoadTrack()
 		string label;
 
 		file >> label;
-		file >> a >> b >> c >> d >> e >> f >> g;
-		mTrackObjects->SetStart({(float) a, (float)b}, {(float) c, (float) d}, {(float) e, (float) f}, g);
-
-		file >> label;
-		file >> a >> b >> c >> d >> e >> f >> g;
-		mTrackObjects->SetCheckpoint({(float) a, (float)b}, {(float) c, (float) d}, {(float) e, (float) f}, g);
-
-		file >> label;
 		file >> a;
 
-		mTrackObjects->ClearObstacles();
+		mObjects->ClearTurretBases();
 		for (size_t i = 0; i < a; i++)
 		{
 			file >> label;
-			file >> b >> c >> d >> e >> f;
-			mTrackObjects->AddObstacle(Obstacles({ (float)b, (float)c }, { (float)d, (float)e }, f));
+			file >> b >> c >> d >> e;
+			mObjects->AddTurretBase(TurretBase({ (float)b, (float)c }, { (float)d, (float)e }));
 		}
 
 		file >> label;

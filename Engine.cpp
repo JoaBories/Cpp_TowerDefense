@@ -3,7 +3,7 @@
 void Engine::StartRace()
 {
 	mGameState = RaceState;
-	mTrack->LoadTrack();
+	mTrack->LoadTerrain();
 }
 
 Engine::Engine() :
@@ -22,7 +22,7 @@ Engine::~Engine()
 
 void Engine::Init()
 {
-	mTrack = new Track();
+	mTrack = new Terrain();
 	mTileCursor = new TileCursor(mTrack->GetTilemap()->GetTileSize(), mTrack);
 }
 
@@ -34,7 +34,7 @@ void Engine::Update()
 		if (IsKeyPressed(KEY_E))
 		{
 			mGameState = EditorState;
-			mTrack->LoadTrack();
+			mTrack->LoadTerrain();
 		}
 
 		else if (IsKeyPressed(KEY_P) && mTrack->IsThereASave())
@@ -73,14 +73,12 @@ void Engine::Draw()
 	switch (mGameState)
 	{
 	case StartState:
-		Utils::DrawTextCentered("Mini Car Race", { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 3 }, 20, mOrange);
+		Utils::DrawTextCentered("Mini TD", { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 3 }, 20, mOrange);
 		
 		if (mTrack->IsThereASave())
 		{
 			Utils::DrawTextCentered("Play - P", { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2 }, 20, mOrange);
 		}
-		
-		Utils::DrawTextCentered("Track Editor - E", { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 3 * 2 }, 20, mOrange);
 		break;
 
 	case EditorState:
@@ -98,7 +96,7 @@ void Engine::Draw()
 		}
 		else
 		{
-			Utils::DrawTextCentered("Track invalid", { (float)GetScreenWidth() - 125, (float)GetScreenHeight() - 150 }, 20);
+			Utils::DrawTextCentered("Map invalid", { (float)GetScreenWidth() - 125, (float)GetScreenHeight() - 150 }, 20);
 		}
 
 		break;

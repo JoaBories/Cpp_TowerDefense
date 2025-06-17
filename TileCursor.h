@@ -4,9 +4,7 @@
 enum CursorType
 {
 	SetTiles,
-	SetStart,
-	SetCheckpoint,
-	SetObstacles
+	SetTurretBases
 };
 
 
@@ -22,7 +20,7 @@ private:
 
 	CursorType mType;
 
-	Track* mTrack;
+	Terrain* mTerrain;
 
 	Texture *mTileTexture;
 
@@ -32,7 +30,7 @@ private:
 public:
 	TileCursor();
 	~TileCursor();
-	TileCursor(Vector2 size, Track* track);
+	TileCursor(Vector2 size, Terrain* track);
 
 	void Update();
 	void Draw() const;

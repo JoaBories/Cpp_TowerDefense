@@ -4,7 +4,7 @@
 
 using std::vector;
 
-#include "Obstacles.h"
+#include "TurretBase.h"
 
 
 struct Checkpoint
@@ -20,13 +20,13 @@ class TrackObjects
 private :
 	Checkpoint mStart;
 	Checkpoint mCheckpoint;
-	vector<Obstacles> mObstacles;
+	vector<TurretBase> mObstacles;
 
 public :
 	TrackObjects();
 	~TrackObjects();
 
-	void DrawObstacles() const;
+	void DrawTurretBases() const;
 
 	void SetStart(Vector2 position, Vector2 size, Vector2 direction, int rotation);
 	void SetCheckpoint(Vector2 position, Vector2 size, Vector2 direction, int rotation);
@@ -34,9 +34,9 @@ public :
 	Checkpoint GetStart() const;
 	Checkpoint GetCheckpoint() const;
 
-	vector<Obstacles> GetObstacles() const;
-	void AddObstacle(Obstacles obstacle);
-	void RemoveObstacle(int index);
-	void ClearObstacles();
+	vector<TurretBase> GetTurretBases() const;
+	void AddTurretBase(TurretBase obstacle);
+	void RemoveTurretBase(int index);
+	void ClearTurretBases();
 };
 

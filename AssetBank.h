@@ -1,6 +1,7 @@
 #pragma once
 #include "raylib.h"
 #include <map>
+#include "Utils.h"
 
 using std::map;
 
@@ -30,15 +31,10 @@ class AssetBank
 {
 private :
 	map<TileLayer, Texture*> mTileLayers;
+	vector<Texture*> mTurretTextures;
 	Texture* mErrorTexture;
-	Texture* mStartTexture;
-	Texture* mCheckpointTexture;
-	Texture* mObstacleTexture;
 	Texture* mEditorControlsTexture;
-	Texture* mCar1Texture;
-	Texture* mCar2Texture;
-
-	Texture* mSkidMarkTexture;
+	Texture* mTurretBaseTexture;
 
 	Texture* LoadTextureFromSource(const char* source);
 
@@ -51,11 +47,8 @@ public :
 
 	Texture* GetTileLayerTexture(TileLayer layer);
 	Texture* GetErrorTexture() const;
-	Texture* GetStartTexture() const;
-	Texture* GetCheckpointTexture() const;
-	Texture* GetObstacleTexture() const;
 	Texture* GetEditorControlsTexture() const;
-	Texture* GetCarTexture(int number) const;
-	Texture* GetSkidMarkTexture() const;
+	Texture* GetTurretTexture(int index) const;
+	Texture* GetTurretBaseTexture() const;
 };
 

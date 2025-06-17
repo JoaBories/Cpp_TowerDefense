@@ -15,7 +15,7 @@ class Engine
 {
 private :
 	TileCursor* mTileCursor;
-	Track* mTrack;
+	Terrain* mTrack;
 
 	GameState mGameState;
 

@@ -39,7 +39,7 @@
     <ClCompile Include="TrackObjects.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Obstacles.cpp">
+    <ClCompile Include="TurretBase.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="Track.cpp">
@@ -68,7 +68,7 @@
     <ClInclude Include="TrackObjects.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="Obstacles.h">
+    <ClInclude Include="TurretBase.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="Track.h">

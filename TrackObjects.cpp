@@ -13,9 +13,9 @@ TrackObjects::~TrackObjects()
 {
 }
 
-void TrackObjects::DrawObstacles() const
+void TrackObjects::DrawTurretBases() const
 {
-	for (Obstacles obstacle : mObstacles)
+	for (TurretBase obstacle : mObstacles)
 	{
 		obstacle.Draw();
 	}
@@ -41,22 +41,22 @@ Checkpoint TrackObjects::GetCheckpoint() const
 	return mCheckpoint;
 }
 
-vector<Obstacles> TrackObjects::GetObstacles() const
+vector<TurretBase> TrackObjects::GetTurretBases() const
 {
 	return mObstacles;
 }
 
-void TrackObjects::AddObstacle(Obstacles obstacle)
+void TrackObjects::AddTurretBase(TurretBase obstacle)
 {
 	mObstacles.push_back(obstacle);
 }
 
-void TrackObjects::RemoveObstacle(int index)
+void TrackObjects::RemoveTurretBase(int index)
 {
 	mObstacles.erase(mObstacles.begin() + index);
 }
 
-void TrackObjects::ClearObstacles()
+void TrackObjects::ClearTurretBases()
 {
 	mObstacles.clear();
 }
