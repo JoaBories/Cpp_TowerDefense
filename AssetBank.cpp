@@ -33,6 +33,9 @@ AssetBank::AssetBank()
 	mEnemyTextures.push_back(LoadTextureFromSource("resources/img/plane_1.png"));
 	mEnemyTextures.push_back(LoadTextureFromSource("resources/img/plane_2.png"));
 
+    mBulletTextures.push_back(LoadTextureFromSource("resources/img/bullet_ground.png"));
+    mBulletTextures.push_back(LoadTextureFromSource("resources/img/bullet_air.png"));
+
 	mTurretBaseTexture = LoadTextureFromSource("resources/img/turret_base.png");
 
     mTileLayers[{0, 1, 0}] = LoadTextureFromSource("resources/img/grass_1.png");
@@ -65,7 +68,7 @@ AssetBank* AssetBank::GetInstance()
 
 Texture* AssetBank::GetTileLayerTexture(TileLayer layer)
 {
-	if (mTileLayers[layer] == nullptr)
+	if (!mTileLayers[layer])
 	{
 		return mErrorTexture;
 	}
@@ -85,7 +88,7 @@ Texture* AssetBank::GetEditorControlsTexture() const
 
 Texture* AssetBank::GetTurretTexture(int index) const
 {
-    if (mTurretTextures[index] == nullptr)
+    if (!mTurretTextures[index])
     {
         return mErrorTexture;
     }
@@ -95,11 +98,20 @@ Texture* AssetBank::GetTurretTexture(int index) const
 
 Texture* AssetBank::GetEnemyTexture(int index) const
 {
-    if (mEnemyTextures[index] == nullptr)
+    if (!mEnemyTextures[index])
     {
         return mErrorTexture;
     }
     return mEnemyTextures[index];
+}
+
+Texture* AssetBank::GetBulletTexture(int index) const
+{
+    if (!mBulletTextures[index])
+    {
+        return mErrorTexture;
+    }
+    return mBulletTextures[index];
 }
 
 Texture* AssetBank::GetTurretBaseTexture() const

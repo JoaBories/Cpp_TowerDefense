@@ -2,6 +2,7 @@
 #include <string>
 #include "TileCursor.h"
 #include "EnemySpawner.h"
+#include "Turret.h"
 
 enum GameState
 {
@@ -22,8 +23,13 @@ private :
 	Color mOrange;
 
 	EnemySpawner* mEnemySpawner;
+	BulletBank* mBulletBank;
+	vector<Turret*> mTurrets;
 
 	void StartGame();
+	void MouseCheckUpdate();
+	void MouseCheckDraw();
+	void DrawGameUI() const;
 
 public :
 	Engine();

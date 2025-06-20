@@ -33,6 +33,12 @@ class Enemy
 		bool IsWaitingForKill() const;
 		bool GotCastle() const;
 
+		Vector2 GetPosition() const;
+		float GetRadius() const;
+
+		int GetType() const;
+		int GetPower() const;
+
 
 };
 

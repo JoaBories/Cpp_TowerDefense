@@ -6,8 +6,8 @@
 class Terrain
 {
 private :
-	Tilemap* mTilemap;
-	Objects* mObjects;
+	Tilemap* mpTilemap;
+	Objects* mpObjects;
 
 	string mFileName = "resources/map/01.map";
 

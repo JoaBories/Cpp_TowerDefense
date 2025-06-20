@@ -24,7 +24,7 @@ Enemy::Enemy(Vector2 position, int type, int power, float health, vector<Vector2
 	mPosition{ position },
 	mWaypoints{ waypoints },
 	mRotation{ 0 },
-	mSize{ 75, 75 },
+	mSize{ 40, 40 },
 	mIsWaitingForKill{ false },
 	mGotCastle{ false }
 {
@@ -57,8 +57,6 @@ void Enemy::Update()
 	}
 
 	mRotation = Utils::RotFromVector2(direction);
-
-	cout << mCurrentWaypoint << endl;
 }
 
 void Enemy::Draw() const
@@ -69,6 +67,7 @@ void Enemy::Draw() const
 	Rectangle rect = { mPosition.x, mPosition.y, mSize.x, mSize.y };
 	
 	DrawTexturePro(*text, { 0,0,(float)text->width,(float)text->height }, rect, { rect.width * 0.5f, rect.height * 0.5f }, mRotation, WHITE);
+	//DrawCircleV(mPosition, GetRadius(), {255,0,0,100});
 }
 
 void Enemy::TakeDamage(float damage)
@@ -89,4 +88,24 @@ bool Enemy::IsWaitingForKill() const
 bool Enemy::GotCastle() const
 {
 	return mGotCastle;
+}
+
+Vector2 Enemy::GetPosition() const
+{
+	return mPosition;
+}
+
+float Enemy::GetRadius() const
+{
+	return mSize.x * 0.5f;
+}
+
+int Enemy::GetType() const
+{
+	return mType;
+}
+
+int Enemy::GetPower() const
+{
+	return mPower;
 }

@@ -70,6 +70,8 @@ void TileCursor::Update()
 		hasSaved = true;
 	}
 
+	Vector2 position = { floor(mSize.x * (0.5f + mColIndex)), floor(mSize.y * (0.5f + mRowIndex)) };
+
 	switch (mType)
 	{
 	case SetTiles:
@@ -112,7 +114,7 @@ void TileCursor::Update()
 			{
 				TurretBase base = bases[i];
 
-				if ( base.GetPosition().x == mSize.x * (0.5f + mColIndex) && base.GetPosition().y == mSize.y * (0.5f + mRowIndex))
+				if ( base.GetPosition().x == position.x && base.GetPosition().y == position.y)
 				{
 					isSamePos = true;
 					index = i;
@@ -121,7 +123,7 @@ void TileCursor::Update()
 
 			if (!isSamePos)
 			{
-				mTerrain->GetObjects()->AddTurretBase(TurretBase({ mSize.x * (0.5f + mColIndex), mSize.y * (0.5f + mRowIndex) }, mTerrain->GetTilemap()->GetTileSize()));
+				mTerrain->GetObjects()->AddTurretBase(TurretBase(position, mTerrain->GetTilemap()->GetTileSize()));
 			}
 			else
 			{
@@ -140,7 +142,7 @@ void TileCursor::Update()
 			{
 				Vector2 waypoint = waypoints[i];
 
-				if (waypoint.x == mSize.x * (0.5f + mColIndex) && waypoint.y == mSize.y * (0.5f + mRowIndex))
+				if (waypoint.x == position.x && waypoint.y == position.y)
 				{
 					isSamePos = true;
 					index = i;
@@ -149,7 +151,7 @@ void TileCursor::Update()
 
 			if (!isSamePos)
 			{
-				mTerrain->GetObjects()->AddEnemyWaypoint({ mSize.x * (0.5f + mColIndex), mSize.y * (0.5f + mRowIndex) });
+				mTerrain->GetObjects()->AddEnemyWaypoint(position);
 			}
 			else
 			{

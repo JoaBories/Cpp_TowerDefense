@@ -6,12 +6,79 @@ void Engine::StartGame()
 	mTerrain->LoadTerrain();
 }
 
+void Engine::MouseCheckUpdate()
+{
+	vector<TurretBase> bases = mTerrain->GetObjects()->GetTurretBases();
+	Vector2 mousePosition = GetMousePosition();
+
+	for (TurretBase base : bases)
+	{
+		bool leftSide = mousePosition.x >= base.GetPosition().x - base.GetSize().x * 0.5f;
+		bool rightSide = mousePosition.x <= base.GetPosition().x + base.GetSize().x * 0.5f;
+		bool topSide = mousePosition.y >= base.GetPosition().y - base.GetSize().y * 0.5f;
+		bool bottomSide = mousePosition.y <= base.GetPosition().y + base.GetSize().y * 0.5f;
+
+		if (leftSide && rightSide && topSide && bottomSide)
+		{
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				bool thereIsAlreadyOne = false;
+				for (Turret* turret : mTurrets)
+				{
+					if (turret->GetPosition().x == base.GetPosition().x && turret->GetPosition().y == base.GetPosition().y)
+					{
+						thereIsAlreadyOne = true;
+					}
+				}
+
+				if (!thereIsAlreadyOne)
+				{
+					mTurrets.push_back(new Turret(0, 0, base.GetPosition(), mEnemySpawner, mBulletBank, base.GetSize()));
+				}
+			}
+
+			break;
+		}
+	}
+}
+
+void Engine::MouseCheckDraw()
+{
+	vector<TurretBase> bases = mTerrain->GetObjects()->GetTurretBases();
+	Vector2 mousePosition = GetMousePosition();
+
+	for (TurretBase base : bases)
+	{
+		bool leftSide = mousePosition.x >= base.GetPosition().x - base.GetSize().x * 0.5f;
+		bool rightSide = mousePosition.x <= base.GetPosition().x + base.GetSize().x * 0.5f;
+		bool topSide = mousePosition.y >= base.GetPosition().y - base.GetSize().y * 0.5f;
+		bool bottomSide = mousePosition.y <= base.GetPosition().y + base.GetSize().y * 0.5f;
+
+		if (leftSide && rightSide && topSide && bottomSide)
+		{
+			Rectangle rect = { base.GetPosition().x - base.GetSize().x * 0.5f, base.GetPosition().y - base.GetSize().y * 0.5f, base.GetSize().x, base.GetSize().y };
+			DrawRectangleRec(rect, GREEN);
+		}
+	}
+}
+
+void Engine::DrawGameUI() const
+{
+	string texte = "";
+	texte = "Life : " + std::to_string( PlayerInfos::GetInstance()->GetLife());
+	Utils::DrawTextWithBackground(texte, { (float)GetScreenWidth() * 0.9f, (float)GetScreenHeight() * 0.1f }, 40, WHITE, mOrange, 10);
+	texte = "Money : " + std::to_string(PlayerInfos::GetInstance()->GetMoney());
+	Utils::DrawTextWithBackground(texte, { (float)GetScreenWidth() * 0.9f, (float)GetScreenHeight() * 0.2f }, 40, WHITE, mOrange, 10);
+}
+
 Engine::Engine() :
 	mTileCursor{ nullptr },
 	mTerrain{ nullptr },
 	mGameState{ StartState },
 	mOrange{ 245, 155, 20, 255 },
-	mEnemySpawner{ nullptr }
+	mEnemySpawner{ nullptr },
+	mBulletBank{ nullptr },
+	mTurrets{}
 {
 }
 
@@ -19,6 +86,8 @@ Engine::~Engine()
 {
 	delete mTileCursor;
 	delete mTerrain;
+	delete mEnemySpawner;
+	delete mBulletBank;
 }
 
 void Engine::Init()
@@ -26,6 +95,7 @@ void Engine::Init()
 	mTerrain = new Terrain();
 	mTileCursor = new TileCursor(mTerrain->GetTilemap()->GetTileSize(), mTerrain);
 	mEnemySpawner = new EnemySpawner(mTerrain);
+	mBulletBank = new BulletBank(mEnemySpawner);
 }
 
 void Engine::Update()
@@ -56,6 +126,14 @@ void Engine::Update()
 
 	case DefendState:
 		mEnemySpawner->Update();
+		MouseCheckUpdate();
+		
+		for (Turret* turret : mTurrets)
+		{
+			turret->Update();
+		}
+
+		mBulletBank->Update();
 
 		break;
 
@@ -109,7 +187,17 @@ void Engine::Draw()
 		mTerrain->Draw();
 		mTerrain->GetObjects()->DrawEnemyPath();
 		mEnemySpawner->Draw();
+
+		MouseCheckDraw();
 		
+		for (Turret* turret : mTurrets)
+		{
+			turret->Draw();
+		}
+
+		mBulletBank->Draw();
+		DrawGameUI();
+
 		break;
 
 	case FinishState:

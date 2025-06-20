@@ -33,6 +33,7 @@ private :
 	map<TileLayer, Texture*> mTileLayers;
 	vector<Texture*> mTurretTextures;
 	vector<Texture*> mEnemyTextures;
+	vector<Texture*> mBulletTextures;
 	Texture* mErrorTexture;
 	Texture* mEditorControlsTexture;
 	Texture* mTurretBaseTexture;
@@ -51,6 +52,7 @@ public :
 	Texture* GetEditorControlsTexture() const;
 	Texture* GetTurretTexture(int index) const;
 	Texture* GetEnemyTexture(int index) const;
+	Texture* GetBulletTexture(int index) const;
 	Texture* GetTurretBaseTexture() const;
 };
 

@@ -32,8 +32,8 @@ EnemySpawner::EnemySpawner(Terrain* terrain) :
 	EnemyData enemy3 = { 1,0 };
 	EnemyData enemy4 = { 1,1 };
 
-	mWaves.push_back({ { {enemy1, 10} }, 1, 20 });
-	mWaves.push_back({ { {enemy1, 10}, {enemy2, 2} }, 1, 20 });
+	mWaves.push_back({ { {enemy1, 10} }, 1, 10 });
+	mWaves.push_back({ { {enemy1, 10}, {enemy2, 2} }, 1.5f, 10 });
 }
 
 EnemySpawner::~EnemySpawner()
@@ -81,10 +81,12 @@ void EnemySpawner::Update()
 
 		if (mGroundEnemies[i]->IsWaitingForKill())
 		{
+			int enemyPower = 1 + 0 + (mGroundEnemies[i]->GetPower()+1) * 2;
 			if (mGroundEnemies[i]->GotCastle())
 			{
-				//attack castle
+				PlayerInfos::GetInstance()->AddLife(-enemyPower);
 			}
+			PlayerInfos::GetInstance()->AddMoney(2*enemyPower);
 
 			delete mGroundEnemies[i];
 			mGroundEnemies.erase(mGroundEnemies.begin() + i);
@@ -98,10 +100,12 @@ void EnemySpawner::Update()
 
 		if (mAirEnemies[i]->IsWaitingForKill())
 		{
+			int enemyPower = 1 + 1 + (mAirEnemies[i]->GetPower()) * 2;
 			if (mAirEnemies[i]->GotCastle())
 			{
-				//attack castle
+				PlayerInfos::GetInstance()->AddLife(-enemyPower);
 			}
+			PlayerInfos::GetInstance()->AddMoney(2*enemyPower);
 
 			delete mAirEnemies[i];
 			mAirEnemies.erase(mAirEnemies.begin() + i);
@@ -120,10 +124,23 @@ void EnemySpawner::Draw() const
 
 void EnemySpawner::SpawnEnemy(int type, int power)
 {
-	if (/*type == 1*/ true)
+	if (type == 0)
 	{
-		mGroundEnemies.push_back(new Enemy(mTerrain->GetObjects()->GetEnemyPath()[0], type, power, 100, mTerrain->GetObjects()->GetEnemyPath(), 50));
-		EnemyCount++;
+		mGroundEnemies.push_back(new Enemy(mTerrain->GetObjects()->GetEnemyPath()[0], type, power, 100, mTerrain->GetObjects()->GetEnemyPath(), 30));
 	}
-	cout << mGroundEnemies.size() << " enemies spawned." << endl;
+	else
+	{
+		mAirEnemies.push_back(new Enemy(mTerrain->GetObjects()->GetEnemyPath()[0], type, power, 100, mTerrain->GetObjects()->GetEnemyPath(), 30));
+	}
+	EnemyCount++;
+}
+
+vector<Enemy*> EnemySpawner::GetGroundsEnemies() const
+{
+	return mGroundEnemies;
+}
+
+vector<Enemy*> EnemySpawner::GetAirEnemies() const
+{
+	return mAirEnemies;
 }

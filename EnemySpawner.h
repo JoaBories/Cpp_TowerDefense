@@ -2,7 +2,7 @@
 
 #include "Enemy.h"
 #include "Terrain.h"
-
+#include "PlayerInfos.h"
 
 struct EnemyData
 {
@@ -52,6 +52,9 @@ public :
 	void Draw() const;
 
 	void SpawnEnemy(int type, int power);
+
+	vector<Enemy*> GetGroundsEnemies() const;
+	vector<Enemy*> GetAirEnemies() const;
 
 };
 

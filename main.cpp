@@ -18,6 +18,7 @@ Color backgroundColor = BLACK;
 const char* gameName = "CarGame";
 
 AssetBank* assetBank = nullptr;
+PlayerInfos* playerInfos = nullptr;
 
 int main() {
 
@@ -38,6 +39,7 @@ void Init()
     SetTargetFPS(60);
 
     assetBank = new AssetBank();
+    playerInfos = new PlayerInfos();
 
     engine.Init();
 }
@@ -47,6 +49,7 @@ void DeInit()
     CloseWindow();
 
     delete assetBank;
+    delete playerInfos;
 }
 
 void UpdateDraw()
