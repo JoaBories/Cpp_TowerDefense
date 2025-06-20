@@ -1,12 +1,13 @@
 #pragma once
 #include <string>
 #include "TileCursor.h"
+#include "EnemySpawner.h"
 
 enum GameState
 {
 	StartState,
 	EditorState,
-	RaceState,
+	DefendState,
 	FinishState
 };
 
@@ -19,6 +20,8 @@ private :
 	GameState mGameState;
 
 	Color mOrange;
+
+	EnemySpawner* mEnemySpawner;
 
 	void StartGame();
 

@@ -32,6 +32,7 @@ class AssetBank
 private :
 	map<TileLayer, Texture*> mTileLayers;
 	vector<Texture*> mTurretTextures;
+	vector<Texture*> mEnemyTextures;
 	Texture* mErrorTexture;
 	Texture* mEditorControlsTexture;
 	Texture* mTurretBaseTexture;
@@ -49,6 +50,7 @@ public :
 	Texture* GetErrorTexture() const;
 	Texture* GetEditorControlsTexture() const;
 	Texture* GetTurretTexture(int index) const;
+	Texture* GetEnemyTexture(int index) const;
 	Texture* GetTurretBaseTexture() const;
 };
 

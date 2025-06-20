@@ -2,7 +2,7 @@
 
 void Engine::StartGame()
 {
-	mGameState = RaceState;
+	mGameState = DefendState;
 	mTerrain->LoadTerrain();
 }
 
@@ -10,7 +10,8 @@ Engine::Engine() :
 	mTileCursor{ nullptr },
 	mTerrain{ nullptr },
 	mGameState{ StartState },
-	mOrange{ 245, 155, 20, 255 }
+	mOrange{ 245, 155, 20, 255 },
+	mEnemySpawner{ nullptr }
 {
 }
 
@@ -24,6 +25,7 @@ void Engine::Init()
 {
 	mTerrain = new Terrain();
 	mTileCursor = new TileCursor(mTerrain->GetTilemap()->GetTileSize(), mTerrain);
+	mEnemySpawner = new EnemySpawner(mTerrain);
 }
 
 void Engine::Update()
@@ -52,7 +54,9 @@ void Engine::Update()
 		}
 		break;
 
-	case RaceState:
+	case DefendState:
+		mEnemySpawner->Update();
+
 		break;
 
 	case FinishState:
@@ -101,8 +105,10 @@ void Engine::Draw()
 
 		break;
 
-	case RaceState:
-		mTerrain->Draw();	
+	case DefendState:
+		mTerrain->Draw();
+		mTerrain->GetObjects()->DrawEnemyPath();
+		mEnemySpawner->Draw();
 		
 		break;
 

@@ -9,7 +9,7 @@ private :
 	Tilemap* mTilemap;
 	Objects* mObjects;
 
-	string mFileName = "resources/track/01.track";
+	string mFileName = "resources/map/01.map";
 
 public :
 	Terrain();

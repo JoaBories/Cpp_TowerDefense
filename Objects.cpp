@@ -3,7 +3,8 @@
 #include "Utils.h"
 
 Objects::Objects() :
-	mTurretBases{}
+	mTurretBases{},
+	mEnemyPath{}
 {
 }
 
@@ -51,16 +52,14 @@ void Objects::RemoveEnemyWaypoint(int index)
 
 void Objects::ClearEnemyPath()
 {
-	mTurretBases.clear();
+	mEnemyPath.clear();
 }
-
-
 
 void Objects::DrawTurretBases() const
 {
-	for (TurretBase obstacle : mTurretBases)
+	for (TurretBase base : mTurretBases)
 	{
-		obstacle.Draw();
+		base.Draw();
 	}
 }
 

@@ -28,6 +28,11 @@ AssetBank::AssetBank()
 	mTurretTextures.push_back(LoadTextureFromSource("resources/img/turret_air_1.png"));
 	mTurretTextures.push_back(LoadTextureFromSource("resources/img/turret_air_2.png"));
 
+	mEnemyTextures.push_back(LoadTextureFromSource("resources/img/soldier_1.png"));
+	mEnemyTextures.push_back(LoadTextureFromSource("resources/img/soldier_2.png"));
+	mEnemyTextures.push_back(LoadTextureFromSource("resources/img/plane_1.png"));
+	mEnemyTextures.push_back(LoadTextureFromSource("resources/img/plane_2.png"));
+
 	mTurretBaseTexture = LoadTextureFromSource("resources/img/turret_base.png");
 
     mTileLayers[{0, 1, 0}] = LoadTextureFromSource("resources/img/grass_1.png");
@@ -86,6 +91,15 @@ Texture* AssetBank::GetTurretTexture(int index) const
     }
 
     return mTurretTextures[index];
+}
+
+Texture* AssetBank::GetEnemyTexture(int index) const
+{
+    if (mEnemyTextures[index] == nullptr)
+    {
+        return mErrorTexture;
+    }
+    return mEnemyTextures[index];
 }
 
 Texture* AssetBank::GetTurretBaseTexture() const

@@ -2,7 +2,12 @@
 
 bool TileCursor::isTrackValid() const
 {
-	return true;
+	if (mTerrain->GetObjects()->GetEnemyPath().size() >= 2)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 TileCursor::TileCursor() :
@@ -187,6 +192,8 @@ void TileCursor::Draw() const
 	rect = { pos.x, pos.y, mSize.x, mSize.y };
 	text = mTileTexture;
 
+	DrawTexturePro(*text, { 0,0,(float)text->width,(float)text->height }, rect, { rect.width * 0.5f, rect.height * 0.5f }, mRotation, WHITE);
+	
 	switch (mType)
 	{
 	case SetTiles:
@@ -194,14 +201,16 @@ void TileCursor::Draw() const
 
 	case SetTurretBases:
 		text = AssetBank::GetInstance()->GetTurretBaseTexture();
+		DrawTexturePro(*text, { 0,0,(float)text->width,(float)text->height }, rect, { rect.width * 0.5f, rect.height * 0.5f }, mRotation, WHITE);
+		break;
 
 	case SetEnemyPath:
-		mTerrain->GetObjects()->DrawEnemyPath();
+		DrawCircleV({ pos.x, pos.y }, 10, RED);
 
 		break;
 	}
 
-	DrawTexturePro(*text, { 0,0,(float)text->width,(float)text->height }, rect, { rect.width * 0.5f, rect.height * 0.5f }, mRotation, WHITE);
+	mTerrain->GetObjects()->DrawEnemyPath();
 }
 
 int TileCursor::GetRowIndex() const
