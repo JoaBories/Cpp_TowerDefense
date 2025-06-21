@@ -4,7 +4,8 @@ PlayerInfos* PlayerInfos::instance = nullptr;
 
 PlayerInfos::PlayerInfos():
 	mMoney{ 25 },
-	mLife{ 100 }
+	mLife{ 100 },
+	mHasWin{ false }
 {
 	if (instance == nullptr)
 	{
@@ -19,6 +20,13 @@ PlayerInfos::~PlayerInfos()
 PlayerInfos* PlayerInfos::GetInstance()
 {
 	return instance;
+}
+
+void PlayerInfos::Reset()
+{
+	mMoney = 25;
+	mLife = 100;
+	mHasWin = false;
 }
 
 int PlayerInfos::GetMoney() const
@@ -49,6 +57,16 @@ void PlayerInfos::SetMoney(int money)
 void PlayerInfos::SetLife(int life)
 {
 	mLife = life;
+}
+
+void PlayerInfos::SetHasWin(bool hasWin)
+{
+	mHasWin = hasWin;
+}
+
+bool PlayerInfos::GetHasWin() const
+{
+	return mHasWin;
 }
 
 

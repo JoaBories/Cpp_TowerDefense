@@ -7,6 +7,7 @@ class PlayerInfos
 private :
 	int mMoney;
 	int mLife;
+	bool mHasWin;
 
 public :
 	PlayerInfos();
@@ -14,6 +15,8 @@ public :
 
 	static PlayerInfos* instance;
 	static PlayerInfos* GetInstance();
+
+	void Reset();
 
 	int GetMoney() const;
 	int GetLife() const;
@@ -23,5 +26,8 @@ public :
 
 	void SetMoney(int money);
 	void SetLife(int life);
+
+	void SetHasWin(bool hasWin);
+	bool GetHasWin() const;
 };
 

@@ -9,7 +9,8 @@ enum GameState
 	StartState,
 	EditorState,
 	DefendState,
-	FinishState
+	FinishStateLost,
+	FinishStateWon
 };
 
 class Engine
@@ -36,6 +37,7 @@ public :
 	~Engine();
 
 	void Init();
+	void Reset();
 	void Update();
 	void Draw();
 };

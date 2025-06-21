@@ -15,12 +15,12 @@ Enemy::Enemy():
 {
 }
 
-Enemy::Enemy(Vector2 position, int type, int power, float health, vector<Vector2> waypoints, float speed):
+Enemy::Enemy(Vector2 position, int type, int power, vector<Vector2> waypoints):
 	mType{ type },
 	mPower{ power }, 
 	mCurrentWaypoint{ 1 },
-	mHealth{ health }, 
-	mSpeed{ speed }, 
+	mHealth{ 0 }, 
+	mSpeed{ 0 }, 
 	mPosition{ position },
 	mWaypoints{ waypoints },
 	mRotation{ 0 },
@@ -28,6 +28,38 @@ Enemy::Enemy(Vector2 position, int type, int power, float health, vector<Vector2
 	mIsWaitingForKill{ false },
 	mGotCastle{ false }
 {
+	switch (type)
+	{
+	case 0:
+		switch (power)
+		{
+		case 0:
+			mHealth = 100;
+			mSpeed = 30;
+			break;
+
+		case 1:
+			mHealth = 250;
+			mSpeed = 20;
+			break;
+		}
+		break;
+
+	case 1:
+		switch (power)
+		{
+		case 0:
+			mHealth = 100;
+			mSpeed = 30;
+			break;
+
+		case 1:
+			mHealth = 100;
+			mSpeed = 30;
+			break;
+		}
+		break;
+	}
 }
 
 Enemy::~Enemy()

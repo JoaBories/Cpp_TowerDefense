@@ -22,7 +22,7 @@ class Enemy
 
 	public:
 		Enemy();
-		Enemy(Vector2 position, int type, int power, float health, vector<Vector2> waypoints, float speed);
+		Enemy(Vector2 position, int type, int power, vector<Vector2> waypoints);
 		~Enemy();
 
 		void Update();

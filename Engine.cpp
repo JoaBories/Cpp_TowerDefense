@@ -31,9 +31,10 @@ void Engine::MouseCheckUpdate()
 					}
 				}
 
-				if (!thereIsAlreadyOne)
+				if (!thereIsAlreadyOne && PlayerInfos::GetInstance()->GetMoney() >= 25)
 				{
 					mTurrets.push_back(new Turret(0, 0, base.GetPosition(), mEnemySpawner, mBulletBank, base.GetSize()));
+					PlayerInfos::GetInstance()->AddMoney(-25);
 				}
 			}
 
@@ -57,7 +58,24 @@ void Engine::MouseCheckDraw()
 		if (leftSide && rightSide && topSide && bottomSide)
 		{
 			Rectangle rect = { base.GetPosition().x - base.GetSize().x * 0.5f, base.GetPosition().y - base.GetSize().y * 0.5f, base.GetSize().x, base.GetSize().y };
-			DrawRectangleRec(rect, GREEN);
+
+			bool thereIsAlreadyOne = false;
+			for (Turret* turret : mTurrets)
+			{
+				if (turret->GetPosition().x == base.GetPosition().x && turret->GetPosition().y == base.GetPosition().y)
+				{
+					thereIsAlreadyOne = true;
+				}
+			}
+
+			if (thereIsAlreadyOne || PlayerInfos::GetInstance()->GetMoney() < 25)
+			{
+				DrawRectangleRec(rect, RED);
+			}
+			else
+			{
+				DrawRectangleRec(rect, GREEN);
+			}
 		}
 	}
 }
@@ -98,6 +116,19 @@ void Engine::Init()
 	mBulletBank = new BulletBank(mEnemySpawner);
 }
 
+void Engine::Reset()
+{
+	PlayerInfos::GetInstance()->Reset();
+	delete mEnemySpawner;
+	delete mBulletBank;
+	for (Turret* turret : mTurrets)
+	{
+		delete turret;
+	}
+	mTurrets.clear();
+	Init();
+}
+
 void Engine::Update()
 {
 	switch (mGameState)
@@ -135,12 +166,32 @@ void Engine::Update()
 
 		mBulletBank->Update();
 
+		if (PlayerInfos::GetInstance()->GetLife() <= 0)
+		{
+			mGameState = FinishStateLost;
+		}
+		else if (PlayerInfos::GetInstance()->GetHasWin())
+		{
+			mGameState = FinishStateWon;
+		}
+
 		break;
 
-	case FinishState:
+	case FinishStateLost:
 		if (IsKeyPressed(KEY_ENTER))
 		{
 			mGameState = StartState;
+
+			Reset();
+		}
+		break;
+
+	case FinishStateWon:
+		if (IsKeyPressed(KEY_ENTER))
+		{
+			mGameState = StartState;
+
+			Reset();
 		}
 		break;
 	}
@@ -185,7 +236,6 @@ void Engine::Draw()
 
 	case DefendState:
 		mTerrain->Draw();
-		mTerrain->GetObjects()->DrawEnemyPath();
 		mEnemySpawner->Draw();
 
 		MouseCheckDraw();
@@ -200,8 +250,14 @@ void Engine::Draw()
 
 		break;
 
-	case FinishState:
+	case FinishStateLost:
+		Utils::DrawTextCentered("You lost !", { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 3 }, 20, mOrange);
+		Utils::DrawTextCentered("Press Enter to return to menu", { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2 }, 20, mOrange);
+		break;
 
+	case FinishStateWon:
+		Utils::DrawTextCentered("You won !", { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 3 }, 20, mOrange);
+		Utils::DrawTextCentered("Press Enter to return to menu", { (float)GetScreenWidth() / 2, (float)GetScreenHeight() / 2 }, 20, mOrange);
 		break;
 
 	}
